@@ -8,24 +8,18 @@ package frogger;
 public class Frogger {
 
     // Field for task 1.
-    private final Road road;
+    // private final Road road;
     private int position;
     
     // Field for task 2. Anything to add/change?
     private final Records records;
-    private String firstName, lastName, phoneNumber, zipCode, state, gender;
+    private FroggerID froggerID;
 
-    public Frogger(Road road, int position, Records records, String firstName, String lastName, String phoneNumber,
-    String zipCode, String state, String gender) {
-        this.road = road;
+    public Frogger(Records records, FroggerID fID, int position) {
+        // this.road = road;
         this.position = position;
         this.records = records;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.zipCode = zipCode;
-        this.state = state;
-        this.gender = gender;
+        this.froggerID = fID;
     }
 
     /**
@@ -34,9 +28,9 @@ public class Frogger {
      * @param forward true is move forward, else false.
      * @return true if move successful, else false.
      */
-    public boolean move(boolean forward) {
+    public boolean move(boolean forward, Road road) {
         int nextPosition = this.position + (forward ? 1 : -1);
-        if (!isValid(nextPosition) || isOccupied(nextPosition)) {
+        if (!isValid(nextPosition, road) || isOccupied(nextPosition, road)) {
             return false;
         }
         this.position = nextPosition;
@@ -44,15 +38,13 @@ public class Frogger {
     }
 
     // TODO: Do you notice any issues here?
-    public boolean isOccupied(int position) {
-        boolean[] occupied = this.road.getOccupied();
-        return occupied[position];
+    public boolean isOccupied(int position, Road road) {
+        return road.isOccupied(position);
     }
     
-    public boolean isValid(int position) {
+    public boolean isValid(int position, Road road) {
         if (position < 0) return false;
-        boolean[] occupied = this.road.getOccupied();
-        return position < occupied.length;
+        return position < road.getSize();
     }
 
     /**
@@ -61,7 +53,7 @@ public class Frogger {
      * @return true if record successful, else false.
      */
     public boolean recordMyself() {
-      boolean success = records.addRecord(firstName, lastName, phoneNumber, zipCode, state, gender);
+      boolean success = records.addRecord(this.froggerID);
       return success;
     }
 

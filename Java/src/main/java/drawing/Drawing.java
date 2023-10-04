@@ -29,11 +29,13 @@ public class Drawing {
      * @param filename file name
      */
     public void draw(String format, String filename) {
+        // Too much detail about type of writer (also hard-coded)
         // TODO: Do you notice any issues here?
         if (format.equals("jpeg")) {
             try (Writer writer = new JPEGWriter(filename + ".jpeg")) {
                 for (Shape shape : this.shapes) {
                     // TODO: What is the issue of the behavior here?
+                    // line has to png/jpg, need to specify the type
                     Line[] lines = shape.toLines();
                     shape.draw(writer, lines);
                 }

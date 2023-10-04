@@ -42,4 +42,20 @@ public class Records {
                 new String[]{firstName, lastName, phoneNumber, zipCode, state, gender});
         return true;
     }
+
+    public boolean addRecord(FroggerID froggerID) {
+        for (String[] row : this.records) {
+            if (row[0].equals(froggerID.firstName())
+                    && row[1].equals(froggerID.lastName())
+                    && row[2].equals(froggerID.phoneNumber())
+                    && row[3].equals(froggerID.zipCode())
+                    && row[4].equals(froggerID.state())
+                    && row[5].equals(froggerID.gender())) {
+                return false;
+            }
+        }
+        this.records.add(
+                new String[]{froggerID.firstName(), froggerID.lastName(), froggerID.phoneNumber(), froggerID.zipCode(), froggerID.state(), froggerID.gender()});
+        return true;
+    }
 }
